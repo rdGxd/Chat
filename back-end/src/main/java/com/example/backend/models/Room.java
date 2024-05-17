@@ -8,7 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.example.backend.models.user.User;
 
-import jakarta.persistence.Column;
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,10 +31,11 @@ public class Room {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
 
-  @Column
+  @NonNull
   private String name;
 
-  private String message;
+  @NonNull
+  private String ownerId;
 
   @CreationTimestamp
   private String createdAt;
@@ -44,5 +45,11 @@ public class Room {
 
   @OneToMany
   private List<User> user = new ArrayList<>();
+
+  public Room(String name, User user) {
+    this.name = name;
+    this.user.add(user);
+    this.ownerId = user.getId();
+  }
 
 }

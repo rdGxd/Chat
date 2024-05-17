@@ -63,7 +63,6 @@ public class UserController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable String id, @RequestHeader("Authorization") String token) {
-
     userService.delete(id, token);
     return ResponseEntity.ok().build();
   }
