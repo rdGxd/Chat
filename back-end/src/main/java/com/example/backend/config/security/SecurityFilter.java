@@ -1,8 +1,8 @@
-package com.example.backend.configs.security;
+package com.example.backend.config.security;
 
-import com.example.backend.models.user.User;
-import com.example.backend.repositorys.UserRepository;
-import com.example.backend.services.exceptions.ResourceNotFoundException;
+import com.example.backend.model.user.User;
+import com.example.backend.repository.UserRepository;
+import com.example.backend.service.ResourceNotFoundException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

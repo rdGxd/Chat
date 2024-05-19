@@ -1,10 +1,10 @@
-package com.example.backend.services;
+package com.example.backend.service;
 
-import com.example.backend.dtos.RoomDTO;
-import com.example.backend.models.Room;
-import com.example.backend.models.user.User;
-import com.example.backend.models.user.UserRole;
-import com.example.backend.repositorys.RoomRepository;
+import com.example.backend.dto.RoomDTO;
+import com.example.backend.model.Room;
+import com.example.backend.model.user.User;
+import com.example.backend.model.user.UserRole;
+import com.example.backend.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;

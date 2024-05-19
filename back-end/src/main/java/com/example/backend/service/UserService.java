@@ -1,10 +1,10 @@
-package com.example.backend.services;
+package com.example.backend.service;
 
-import com.example.backend.configs.security.TokenService;
-import com.example.backend.dtos.RegisterDTO;
-import com.example.backend.models.user.User;
-import com.example.backend.models.user.UserRole;
-import com.example.backend.repositorys.UserRepository;
+import com.example.backend.config.security.TokenService;
+import com.example.backend.dto.RegisterDTO;
+import com.example.backend.model.user.User;
+import com.example.backend.model.user.UserRole;
+import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

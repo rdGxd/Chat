@@ -1,11 +1,11 @@
-package com.example.backend.controllers;
+package com.example.backend.controller;
 
-import com.example.backend.dtos.RoomDTO;
-import com.example.backend.dtos.UserDTO;
-import com.example.backend.models.Room;
-import com.example.backend.models.user.User;
-import com.example.backend.services.RoomService;
-import com.example.backend.services.UserService;
+import com.example.backend.dto.RoomDTO;
+import com.example.backend.dto.UserDTO;
+import com.example.backend.model.Room;
+import com.example.backend.model.user.User;
+import com.example.backend.service.RoomService;
+import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

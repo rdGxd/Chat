@@ -1,4 +1,4 @@
-package com.example.backend.models.user;
+package com.example.backend.model.user;
 
 import lombok.Getter;
 
