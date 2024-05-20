@@ -27,6 +27,9 @@ public class Room {
     @NonNull
     private String ownerId;
 
+    @ManyToMany
+    private List<Message> messages = new ArrayList<>();
+
     @CreationTimestamp
     private String createdAt;
 

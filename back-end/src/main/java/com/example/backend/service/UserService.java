@@ -6,6 +6,7 @@ import com.example.backend.model.user.User;
 import com.example.backend.model.user.UserRole;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class UserService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private static void updatedUser(User user, RegisterDTO userDTO) {
         if (userDTO.email() != null && !userDTO.email().isBlank()) {
@@ -62,6 +66,9 @@ public class UserService {
         User userToken = findByToken(token);
         User userId = userRepository.getReferenceById(id);
         if (userToken.getId().equals(userId.getId()) || userToken.getRole() == UserRole.ADMIN) {
+            jdbcTemplate.update("DELETE FROM MESSAGE WHERE USER_ID = ?", userId);
+            jdbcTemplate.update("DELETE FROM ROOM_USER WHERE USER_ID = ?", userId);
+            jdbcTemplate.update("DELETE FROM ROOM WHERE OWNER_ID = ?", userId);
             userRepository.delete(userId);
         }
     }

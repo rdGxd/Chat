@@ -5,7 +5,6 @@ import com.example.backend.model.Room;
 import com.example.backend.model.user.User;
 import com.example.backend.model.user.UserRole;
 import com.example.backend.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +13,18 @@ import java.util.List;
 @Service
 public class RoomService {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    
+    private final JdbcTemplate jdbcTemplate;
+
+    public RoomService(RoomRepository roomRepository, UserService userService, JdbcTemplate jdbcTemplate) {
+        this.roomRepository = roomRepository;
+        this.userService = userService;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public List<Room> findAll() {
         return roomRepository.findAll();
     }
@@ -55,6 +57,7 @@ public class RoomService {
         User user = userService.findByToken(token);
         if (user.getRole() == UserRole.ADMIN || room.getOwnerId().equals(user.getId())) {
             jdbcTemplate.update("DELETE FROM ROOM_USER WHERE ROOM_ID = ?", room.getId());
+            jdbcTemplate.update("DELETE FROM ROOM_MESSAGES WHERE ROOM_ID = ?", room.getId());
             user.setRoom(null);
             roomRepository.delete(room);
         }
@@ -65,6 +68,17 @@ public class RoomService {
         User user = userService.findByToken(token);
         user.setRoom(room);
         room.getUser().add(user);
+        roomRepository.save(room);
+    }
+
+    public void disconnect(String id, String token) {
+        Room room = findById(id);
+        User user = userService.findByToken(token);
+        if (room.getOwnerId().equals(user.getId())) {
+            delete(id, token);
+        }
+        user.setRoom(null);
+        room.getUser().remove(user);
         roomRepository.save(room);
     }
 }
