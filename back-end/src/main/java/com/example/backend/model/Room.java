@@ -33,10 +33,10 @@ public class Room {
     @UpdateTimestamp
     private String updatedAt;
 
-    @OneToMany
+    @ManyToMany
     private List<User> user = new ArrayList<>();
 
-    public Room(String name, User user) {
+    public Room(@NonNull String name, User user) {
         this.name = name;
         this.user.add(user);
         this.ownerId = user.getId();

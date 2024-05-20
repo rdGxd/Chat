@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @UpdateTimestamp
     private String updatedAt;
 
-    @OneToOne
+    @ManyToOne
     private Room room;
 
     public User(@NonNull String email, @NonNull String password, @NonNull UserRole role) {

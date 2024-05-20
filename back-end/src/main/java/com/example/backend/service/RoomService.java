@@ -22,13 +22,7 @@ public class RoomService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
-    private static void updatedRoom(Room room, RoomDTO dto) {
-        if (!dto.name().isBlank()) {
-            room.setName(dto.name());
-        }
-    }
-
+    
     public List<Room> findAll() {
         return roomRepository.findAll();
     }
@@ -50,6 +44,12 @@ public class RoomService {
         }
     }
 
+    private void updatedRoom(Room room, RoomDTO dto) {
+        if (!dto.name().isBlank()) {
+            room.setName(dto.name());
+        }
+    }
+
     public void delete(String id, String token) {
         Room room = findById(id);
         User user = userService.findByToken(token);
@@ -58,5 +58,13 @@ public class RoomService {
             user.setRoom(null);
             roomRepository.delete(room);
         }
+    }
+
+    public void connect(String id, String token) {
+        Room room = findById(id);
+        User user = userService.findByToken(token);
+        user.setRoom(room);
+        room.getUser().add(user);
+        roomRepository.save(room);
     }
 }

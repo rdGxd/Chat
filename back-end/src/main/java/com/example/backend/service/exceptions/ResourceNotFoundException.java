@@ -1,4 +1,4 @@
-package com.example.backend.service;
+package com.example.backend.service.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(Object id) {

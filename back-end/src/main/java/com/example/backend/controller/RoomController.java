@@ -75,4 +75,10 @@ public class RoomController {
         roomService.delete(id, token);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/{id}/connect")
+    public ResponseEntity<Void> connect(@PathVariable String id, @RequestHeader("Authorization") String token) {
+        roomService.connect(id, token);
+        return ResponseEntity.ok().build();
+    }
 }
