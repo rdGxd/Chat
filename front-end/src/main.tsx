@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Header } from "./components/Header/index.tsx";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import "./index.css";
+import { Chat } from "./pages/Chat/index.tsx";
 import { Home } from "./pages/Home/index.tsx";
 import { SingUp } from "./pages/SignUp/index.tsx";
 import { SingIn } from "./pages/SingIn/index.tsx";
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <SingIn />,
+  },
+  {
+    path: "room/:roomId",
+    element: <Chat />,
   },
 ]);
 
