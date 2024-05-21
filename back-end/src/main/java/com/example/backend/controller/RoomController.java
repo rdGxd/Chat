@@ -58,13 +58,13 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody RoomDTO dto, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> insert(@RequestBody RoomDTO dto, @RequestHeader("Authorization") String token) {
         User user = userService.findByToken(token);
         Room room = new Room(dto.name(), user);
         user.setRoom(room);
-        roomService.insert(room);
+        Room r = roomService.insert(room);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(r.getId());
     }
 
     @PutMapping("/{id}")

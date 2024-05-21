@@ -33,8 +33,8 @@ public class RoomService {
         return roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Room not found"));
     }
 
-    public void insert(Room room) {
-        roomRepository.save(room);
+    public Room insert(Room room) {
+        return roomRepository.save(room);
     }
 
     public void update(String id, String token, RoomDTO dto) {
