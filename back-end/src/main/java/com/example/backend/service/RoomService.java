@@ -66,9 +66,11 @@ public class RoomService {
     public void connect(String id, String token) {
         Room room = findById(id);
         User user = userService.findByToken(token);
-        user.setRoom(room);
-        room.getUser().add(user);
-        roomRepository.save(room);
+        if (!room.getUser().contains(user)) {
+            user.setRoom(room);
+            room.getUser().add(user);
+            roomRepository.save(room);
+        }
     }
 
     public void disconnect(String id, String token) {
@@ -77,8 +79,10 @@ public class RoomService {
         if (room.getOwnerId().equals(user.getId())) {
             delete(id, token);
         }
-        user.setRoom(null);
-        room.getUser().remove(user);
-        roomRepository.save(room);
+        if (room.getUser().contains(user)) {
+            user.setRoom(null);
+            room.getUser().remove(user);
+            roomRepository.save(room);
+        }
     }
 }

@@ -98,7 +98,7 @@ public class RoomController {
         }
 
         for (Message m : r.getMessages()) {
-            messageDTOs.add(new MessageDTO(m.getId(), m.getText(), m.getUserName(), m.getUserId(), m.getCreatedAt()));
+            messageDTOs.add(new MessageDTO(m.getId(), m.getText(), m.getUserName(), m.getUserId()));
         }
     }
 }

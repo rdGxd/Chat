@@ -25,7 +25,7 @@ public class Message {
 
     @NonNull
     private String text;
-
+    
     @CreationTimestamp
     private String createdAt;
 
