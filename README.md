@@ -1,2 +1,4 @@
 # Chat
- 
+
+## FALTA FAZER O READ E DEIXAR RESPONSIVO
+
