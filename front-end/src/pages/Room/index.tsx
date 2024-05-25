@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -17,23 +16,26 @@ export const Chat = () => {
   const { roomId } = useParams();
 
   useEffect(() => {
-    setInterval(async () => {
+    const interval = setInterval(async () => {
       try {
-        await axios
-          .get(`${import.meta.env.VITE_API_URL}/room/${roomId}`, {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/room/${roomId}`,
+          {
+            method: "GET",
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-          })
-          .then((r) => {
-            if (r.data.message) {
-              setGetMessage(r.data.message);
-            }
-          });
+          }
+        );
+        const data = await response.json();
+        setGetMessage(data.message);
+        console.log(data.message);
       } catch (error) {
         console.log(error);
       }
     }, 5000);
+
+    return () => clearInterval(interval);
   }, [roomId]);
 
   const handleClickSend = async (
@@ -43,17 +45,14 @@ export const Chat = () => {
   ) => {
     try {
       e.preventDefault();
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/message/${roomId}`,
-        {
-          text,
+      await fetch(`${import.meta.env.VITE_API_URL}/message/${roomId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+        body: JSON.stringify({ text }),
+      });
       setText("");
     } catch (error) {
       console.log(error);

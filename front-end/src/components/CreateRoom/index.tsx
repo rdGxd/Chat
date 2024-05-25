@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Alert } from "../ui/alert";
 import { Button } from "../ui/button";
@@ -30,23 +29,17 @@ export const CreateRoom = () => {
   ) => {
     e.preventDefault();
     try {
-      await axios
-        .post(
-          `${import.meta.env.VITE_API_URL}/room`,
-          {
-            name: nameRoom,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((r) => {
-          if (r.data) {
-            window.location.href = `/room/${r.data}`;
-          }
-        });
+      await fetch(`${import.meta.env.VITE_API_URL}/room`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: nameRoom,
+        }),
+      });
+      window.location.href = `/room/${nameRoom}`;
     } catch (error) {
       setStatusFailed(true);
     }

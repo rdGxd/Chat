@@ -1,5 +1,4 @@
 import { Label } from "@/components/ui/label";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Alert } from "../ui/alert";
 import { Button } from "../ui/button";
@@ -30,21 +29,14 @@ export const ConnectRoom = () => {
   ) => {
     e.preventDefault();
     try {
-      await axios
-        .post(
-          `${import.meta.env.VITE_API_URL}/room/${idRoom}/connect`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((r) => {
-          if (r.status === 200) {
-            window.location.href = `/room/${idRoom}`;
-          }
-        });
+      await fetch(`${import.meta.env.VITE_API_URL}/room/${idRoom}/connect`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      window.location.href = `/room/${idRoom}`;
     } catch (error) {
       setStatusFailed(true);
     }

@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Alert } from "../../components/ui/alert";
@@ -24,15 +23,22 @@ export function SingIn() {
   ) => {
     e.preventDefault();
     try {
-      await axios
-        .post(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      const response = await fetch(`http://localhost:8080/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           email,
           password,
-        })
-        .then((r) => {
-          localStorage.setItem("token", r.data.token);
-          window.location.href = "/";
-        });
+        }),
+      });
+
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/";
+      }
     } catch (error) {
       setStatusError(true);
     }
